@@ -93,7 +93,80 @@ export async function getChatCompletionGPT(msg_text) {
     }
 }
 
+export async function createOpenAIThread() {
+    try {
 
+        const createThreadResponse = await openai.beta.threads.create();
+
+        console.log(createThreadResponse.id);
+        return createThreadResponse.id;
+
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+export async function addMessageToThread(threadId,isGPTResponse,  message) {
+
+    try {
+        const threadMessages = await openai.beta.threads.messages.create(
+            threadId,
+            { role: isGPTResponse? "assistant" : "user", content: message}
+          );
+        
+          console.log(`response on adding msg into thread : ${threadMessages}`);
+    } catch (error) {
+        
+        console.log(error);
+    }
+    
+}
+
+export async function runOpenAIThread(threadId) {
+
+    try {
+        //
+        const threadRunResponse = await openai.beta.threads.runs.create(
+            threadId,
+            { assistant_id: "asst_BIfnB7GXLkw9G84edCNkuXFj" }
+          );
+        
+        console.log(`Run created: ${response}`);
+
+        //retrive thread run 
+        const threadRun = await openai.beta.threads.runs.retrieve(
+            threadId,
+            threadRunResponse.id
+        );
+
+        console.log(`thread run response : ${threadRun}`);
+
+        return threadRun;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
+//retrive thread run messages 
+
+export async function retriveThreadMessages(threadId) {
+
+    try {
+        const threadMessages = await openai.beta.threads.messages.list(
+            threadId
+          );
+           
+         const response= await threadMessages.data.map((message) => message.content);
+        console.log(`thread messages : ${response}`);
+        return response;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    
+}
 
 // get cohere RAG for search info and relevant documents
 

@@ -1,7 +1,7 @@
 
 import express from 'express';
 
-import { getCohereChat , getChatCompletionGPT , getChatCompletionGemini } from '../functions/AI_Functions.js';
+import { getCohereChat, getChatCompletionGPT, getChatCompletionGemini, createOpenAIThread, addMessageToThread, runOpenAIThread , retriveThreadMessages } from '../functions/AI_Functions.js';
 
 const router = express.Router();
 
@@ -47,5 +47,81 @@ router.post('/ai', async (req, res) => {
     }
 });
 
+
+//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+router.post('/create-thread', async (req, res) => {
+
+    let response = "";
+    const { userId } = req.body;
+
+
+
+    try {
+
+
+
+        const threadId = await createOpenAIThread(); //this is gpt model
+        console.log("thread creation response : ", threadId);
+
+
+
+        res.status(200).send({ success: true, message: threadId });
+    } catch (error) {
+        console.error("Error sending api response:", error);
+        res.status(500).send({ success: false, message: 'Failed to send notification' });
+    }
+});
+
+//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+router.post('/run-thread', async (req, res) => {
+
+    let response = "";
+    const { userId, threadId, isGPTResponse, message } = req.body;
+
+    try {
+
+         console.log("threadId on server side   : ", threadId);
+ 
+
+        await addMessageToThread(threadId, isGPTResponse, message); //this is gpt model
+
+        const response = await runOpenAIThread(threadId);
+        console.log("thread run response : ", response);
+        const threadCompletionTimestamp = response.completed_at;
+        console.log("thread completion timestamp in backend : ", threadCompletionTimestamp);
+
+        res.status(200).send({ success: true, message: response , completedAt: threadCompletionTimestamp });
+    } catch (error) {
+        console.error("Error sending api response:", error);
+        res.status(500).send({ success: false, message: 'Failed to send notification' });
+    }
+});
+
+
+
+//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+router.post('/retrive-thread-messages', async (req, res) => {
+
+    let response = "";
+    const { threadId } = req.body;
+
+
+
+    try {
+       
+        console.log("threadId on /retrive-thread-messages  : ", threadId);
+        
+       
+        //wait for json
+        const response = await retriveThreadMessages(threadId);
+        console.log("thread messages : ", response);
+
+
+        res.status(200).send({ success: true, message: response });
+    } catch (error) {
+        console.error("Error sending api response:", error);
+        res.status(500).send({ success: false, message: 'Failed to send notification' });
+    }
+});
 
 export default router;
