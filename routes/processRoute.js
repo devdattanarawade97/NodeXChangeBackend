@@ -1,7 +1,7 @@
 
 import express from 'express';
 
-import { getCohereChat, getChatCompletionGPT, getChatCompletionGemini, createOpenAIThread, addMessageToThread, runOpenAIThread , retriveThreadMessages } from '../functions/AI_Functions.js';
+import { getCohereChat, getChatCompletionGPT, getChatCompletionGemini, createOpenAIThread, addMessageToThread, runOpenAIThread , retriveThreadMessages, createAndRunThread } from '../functions/AI_Functions.js';
 
 const router = express.Router();
 
@@ -97,6 +97,32 @@ router.post('/run-thread', async (req, res) => {
     }
 });
 
+
+//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+router.post('/create-thread-and-run', async (req, res) => {
+
+    let response = "";
+    const {  message } = req.body;
+
+    try {
+        //log message withing create thread and run
+        console.log("msg within create thread and run endpoint   : ", message);
+
+        const runResponse = await createAndRunThread(message); //this is gpt model
+
+         console.log("msg within create thread and run endpoint   : ", runResponse.thread_id);
+ 
+
+    
+        const threadCompletionTimestamp = runResponse.completed_at;
+        console.log("thread completion timestamp in backend : ", threadCompletionTimestamp);
+
+        res.status(200).send({ success: true, message: runResponse , completedAt: threadCompletionTimestamp });
+    } catch (error) {
+        console.error("Error sending api response:", error);
+        res.status(500).send({ success: false, message: 'Failed to send notification' });
+    }
+});
 
 
 //this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output

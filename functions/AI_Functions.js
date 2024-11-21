@@ -149,6 +149,30 @@ export async function runOpenAIThread(threadId) {
     }
 }
 
+//create and run thread function
+
+export async function createAndRunThread(message) {
+
+    try {
+        const run = await openai.beta.threads.createAndRun({
+            assistant_id: "asst_BIfnB7GXLkw9G84edCNkuXFj",
+            thread: {
+                messages: [
+                    { role: "user", content: message },
+                ],
+            },
+        });
+        
+   
+        //log thread data
+        console.log("thread data : ", run);
+        return run;
+
+    } catch (error) {
+        
+        console.log("error while create and run thread : ", error);
+    }
+}
 
 //retrive thread run messages 
 
