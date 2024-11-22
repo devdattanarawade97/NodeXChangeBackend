@@ -111,8 +111,6 @@ router.post('/create-thread-and-run', async (req, res) => {
         const runResponse = await createAndRunThread(message); //this is gpt model
 
          console.log("msg within create thread and run endpoint   : ", runResponse.thread_id);
- 
-
     
         const threadCompletionTimestamp = runResponse.completed_at;
         console.log("thread completion timestamp in backend : ", threadCompletionTimestamp);
