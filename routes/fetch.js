@@ -10,8 +10,10 @@ router.post('/find-relevant-documents', async (req, res) => {
 
         const response = await findRelevantChunks(embeddingsDocs,userQuestion);
         
-        
-        res.status(200).send({ success: true, message: response });
+        const text = response.join(' ')
+        //log text
+        console.log("relevant doc text : ", text);
+        res.status(200).send({ success: true, message: text });
     } catch (error) {
      
         //log error 
