@@ -1,9 +1,11 @@
 import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import processRoute from  './routes/processRoute.js';
+import processRoute from './routes/processRoute.js';
+import upload from './routes/upload.js';
 import morgan from 'morgan';
 import cors from 'cors';
+import fetch from './routes/fetch.js';
 dotenv.config();
 
 
@@ -25,5 +27,7 @@ app.use(cors(corsOptions));
 app.use(morgan('dev'));
 
 app.use('/api/process', processRoute);
+app.use('/api/upload', upload);
+app.use('/api/fetch',fetch);
 
 export default app;

@@ -107,13 +107,26 @@ export async function createOpenAIThread() {
     }
 }
 
+//BadRequestError: 400 Missing required parameter: 'content[0].type'.
+//at APIError.generate (file:///E:/NodeXChange/backend/app/node_modules/openai/error.mjs:41:20)
 
-export async function addMessageToThread(threadId,isGPTResponse,  message) {
+export async function addMessageToThread(threadId, isGPTResponse, message, useRelevantText) {
 
     try {
+
+        //log use relevant info within add message thread 
+        console.log("use relevant info within add message thread : ", useRelevantText);
+         const prompt =`${message} use following information for answering question : ${useRelevantText}`
         const threadMessages = await openai.beta.threads.messages.create(
             threadId,
-            { role: isGPTResponse? "assistant" : "user", content: message}
+
+            {
+                role: "user",
+                content: prompt,
+            },
+
+
+
           );
         
           console.log(`response on adding msg into thread : ${threadMessages}`);
@@ -151,7 +164,7 @@ export async function runOpenAIThread(threadId) {
 
 //create and run thread function
 
-export async function createAndRunThread(message) {
+export async function createAndRunThread(message, relevantText) {
 
     try {
         const run = await openai.beta.threads.createAndRun({
@@ -159,6 +172,7 @@ export async function createAndRunThread(message) {
             thread: {
                 messages: [
                     { role: "user", content: message },
+                    { role: "assistant", content: `use following information for answering question : ${relevantText}` },
                 ],
             },
         });
