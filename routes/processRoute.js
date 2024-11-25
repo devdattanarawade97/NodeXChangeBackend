@@ -6,8 +6,6 @@ import { getCohereChat, getChatCompletionGPT, getChatCompletionGemini, createOpe
 const router = express.Router();
 
 
-
-//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
 router.post('/ai', async (req, res) => {
 
     let response = "";
@@ -48,7 +46,7 @@ router.post('/ai', async (req, res) => {
 });
 
 
-//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+
 router.post('/create-thread', async (req, res) => {
 
     let response = "";
@@ -72,7 +70,8 @@ router.post('/create-thread', async (req, res) => {
     }
 });
 
-//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+
+
 router.post('/run-thread', async (req, res) => {
 
     let response = "";
@@ -98,7 +97,7 @@ router.post('/run-thread', async (req, res) => {
 });
 
 
-//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
+
 router.post('/create-thread-and-run', async (req, res) => {
 
     let response = "";
@@ -123,7 +122,6 @@ router.post('/create-thread-and-run', async (req, res) => {
 });
 
 
-//this endpoint will get invoked when user does the payment  . this is for the purpose of sending msg to user . msg contains the gpt or gemini based text output
 router.post('/retrive-thread-messages', async (req, res) => {
 
     let response = "";
