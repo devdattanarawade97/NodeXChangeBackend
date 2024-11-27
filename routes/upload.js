@@ -17,7 +17,6 @@ router.post('/generate-embeddings',   uploadFile.single('file'), async (req, res
    
     try {
           
-        
         const parsedText = await parsePdf(bufferData);
         const embeddings = await getCohereEmbeddings(parsedText);
         // Send a response back
