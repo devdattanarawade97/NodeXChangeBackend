@@ -109,50 +109,6 @@ The project can be deployed using the following steps:
 4. Deploy the server to a production environment using a reverse proxy or containerization.
 
 
-
-Here is a detailed README document for your complete backend project:
-
-# Backend README
-
-This is the README for the backend of your project.
-
-## Project Overview
-
-This project is a backend API built using Node.js and Express.js. It provides a RESTful API for interacting with a database and performing various tasks.
-
-## Getting Started
-
-To get started with this project, follow these steps:
-
-1. Clone the repository:
-```bash
-git clone <repository_url>
-```
-
-2. Navigate to the backend directory:
-```bash
-cd backend
-```
-
-3. Install the dependencies:
-```bash
-npm install
-```
-
-## Dependencies
-
-The following dependencies are required for this project:
-
-* `express`: a popular Node.js web framework
-* `axios`: a promise-based HTTP client
-* `dotenv`: a library for loading environment variables from a .env file
-* `morgan`: a logging middleware for Express
-* `cors`: a middleware for enabling CORS (Cross-Origin Resource Sharing)
-* `multer`: a middleware for handling multipart/form-data requests
-* `@google/generative-ai`: a library for interacting with Google's Generative AI API
-* `cohere-ai`: a library for interacting with Cohere AI's API
-* `openai`: a library for interacting with OpenAI's API
-
 ## API Documentation
 
 ### Process Route
@@ -312,14 +268,4 @@ These environment variables can be set in a .env file in the root of the project
 
 ## Starting the Server
 
-To start the server, run the following command
-Rate Limiting
-The API has rate limiting to prevent abuse and ensure fair usage. The rate limits are as follows:
-
-GET /api/process: 100 requests per minute
-POST /api/upload: 50 requests per minute
-GET /api/fetch: 200 requests per minute
-POST /api/create-thread: 20 requests per minute
-POST /api/run-thread: 20 requests per minute
-GET /api/retrive-thread-messages: 50 requests per minute
-If you exceed the rate limit, you will receive a 429 Too Many Requests error response.
+To start the server, run the following command : `npm start`
