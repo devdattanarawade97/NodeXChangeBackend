@@ -1,8 +1,4 @@
 
-
-[CursorSurroundingLines]
-[/CursorSurroundingLines]
-
 # Backend Project README
 ==========================
 
